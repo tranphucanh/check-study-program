@@ -1,31 +1,74 @@
-// src/components/Globe.js
-import { Canvas } from "@react-three/fiber";
-import { Sphere, OrbitControls } from "@react-three/drei";
-import { motion } from "framer-motion";
+"use client";
+import * as THREE from "three";
+import { useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Trail, Float, Sphere, Stars } from "@react-three/drei";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
+// import { motion } from "framer-motion-3d";
 
-const Globe: React.FC = () => {
+export default function App() {
 	return (
-		<motion.div
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			transition={{ duration: 2 }}
-			style={{
-				position: "absolute",
-				top: "50%",
-				left: "50%",
-				transform: "translate(-50%, -50%)",
-			}}
-		>
-			<Canvas>
-				<ambientLight />
-				<pointLight position={[10, 10, 10]} />
-				<Sphere args={[3, 32, 32]}>
-					<meshStandardMaterial color="lightblue" />
-				</Sphere>
-				<OrbitControls />
-			</Canvas>
-		</motion.div>
+		<Canvas camera={{ position: [0, 0, 10] }}>
+			<color attach="background" args={["black"]} />
+			<Float speed={4} rotationIntensity={1} floatIntensity={2}>
+				<Atom />
+			</Float>
+			{/* <Stars saturation={0} count={400} speed={0.5} /> */}
+			{/* <motion.g whileHover={{ scale: 1.2 }} whileTap={{ scale: 1.1 }}> */}
+			<Stars saturation={0} count={400} speed={0.5} />
+			{/* </motion.g> */}
+			<EffectComposer>
+				<Bloom mipmapBlur luminanceThreshold={1} radius={0.7} />
+			</EffectComposer>
+		</Canvas>
 	);
-};
+}
 
-export default Globe;
+function Atom(props) {
+	return (
+		<group {...props}>
+			<Electron position={[0, 0, 0.5]} speed={6} />
+			<Electron
+				position={[0, 0, 0.5]}
+				rotation={[0, 0, Math.PI / 3]}
+				speed={6.5}
+			/>
+			<Electron
+				position={[0, 0, 0.5]}
+				rotation={[0, 0, -Math.PI / 3]}
+				speed={7}
+			/>
+			<Sphere args={[0.35, 64, 64]}>
+				<meshBasicMaterial color={[6, 0.5, 2]} toneMapped={false} />
+			</Sphere>
+		</group>
+	);
+}
+
+function Electron({ radius = 2.75, speed = 6, ...props }) {
+	const ref = useRef<any>();
+	useFrame((state) => {
+		const t = state.clock.getElapsedTime() * speed;
+		ref.current!.position.set(
+			Math.sin(t) * radius,
+			(Math.cos(t) * radius * Math.atan(t)) / Math.PI / 1.25,
+			0
+		);
+	});
+	return (
+		<group {...props}>
+			<Trail
+				local
+				width={5}
+				length={10}
+				color={new THREE.Color(2, 1, 10)}
+				attenuation={(t) => t * t}
+			>
+				<mesh ref={ref}>
+					<sphereGeometry args={[0.25]} />
+					<meshBasicMaterial color={[10, 1, 10]} toneMapped={false} />
+				</mesh>
+			</Trail>
+		</group>
+	);
+}

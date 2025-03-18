@@ -1,22 +1,37 @@
+import { Button, Form } from "antd";
 import "./styles.scss";
+import FormContainer from "@/components/FormContainer";
+import { TYPE_COMPONENT } from "@/utility/enum";
+import { ILogin } from "@/models";
+import { loginApi } from "@/services";
+
+// interface ILogin 
+
+const fields = [{
+	name: "username",
+	label: "MSSV",
+	placeholder: 'MSSV',
+	sizeSpan: 24,
+	type: TYPE_COMPONENT.INPUT,
+},{
+	name: "password",
+	label: "Password",
+	sizeSpan: 24,
+	type: TYPE_COMPONENT.INPUT,
+},
+]
 
 const LoginForm = () => {
+	const onSubmit = async ({ username, password }: ILogin) => {
+		const res = await loginApi({ username, password, type: 0 });
+	}
 	return (
-		<div className="contact-form">
-			<h1>Get in touch</h1>
-			<h2>Contact.</h2>
-			<form>
-				<label>Your name</label>
-				<input type="text" placeholder="What's your name?" />
-
-				<label>Your email</label>
-				<input type="email" placeholder="What's your email?" />
-
-				<label>Your message</label>
-				<textarea placeholder="What do you want to say?" />
-
-				<button type="submit">Send</button>
-			</form>
+		<div className="login-form">
+			<h1>LOGIN FOR MORE</h1>
+			<Form onFinish={onSubmit}>
+				<FormContainer fields={fields}/>
+				<Button htmlType="submit">Đăng nhập</Button>
+			</Form>
 		</div>
 	);
 };

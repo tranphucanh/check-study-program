@@ -5,7 +5,7 @@ import { ILogin } from "@/models";
 
 export const loginApi = (data: ILogin): Promise<any> => {
 	return requestAuth({
-		url: "/auth/signin",
+		url: "/authenticate/authpsc",
 		method: "POST",
 		data,
 	});

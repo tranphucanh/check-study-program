@@ -5,7 +5,7 @@ import LoginForm from "./LoginForm";
 
 function Login() {
 	return (
-		<div className="App">
+		<div className="login">
 			<Globe />
 			<LoginForm />
 		</div>
