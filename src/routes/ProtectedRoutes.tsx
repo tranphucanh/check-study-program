@@ -1,10 +1,10 @@
 // Libraries
-import React, { Suspense } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import React, { Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import { Loading } from '@/components'
+import { Loading } from "@/components";
 
-import routes from './'
+import routes from "./";
 
 const ProtectedRoutes: React.FC = () => {
 	return (
@@ -15,7 +15,7 @@ const ProtectedRoutes: React.FC = () => {
 				))}
 			</Routes>
 		</Suspense>
-	)
-}
+	);
+};
 
-export default ProtectedRoutes
+export default ProtectedRoutes;

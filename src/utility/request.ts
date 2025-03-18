@@ -31,6 +31,10 @@ const InterceptorsRequest = (config: any) => {
 	config.headers = {
 		...config.headers,
 		Authorization,
+		apiKey: import.meta.env.VITE_API_KEY,
+		clientId: import.meta.env.VITE_CLIENT_ID,
+		origin: import.meta.env.VITE_ORIGIN,
+		
 	};
 
 	return config;

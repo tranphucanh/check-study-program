@@ -1,4 +1,3 @@
-import { IText } from "@/models";
 import { Button, Modal, Table, Tree } from "antd";
 import styled from "styled-components";
 
@@ -127,11 +126,6 @@ export const TreeStyled = styled(Tree)`
 			display: none;
 		}
 	}
-`;
-
-export const Text = styled.span<IText>`
-	color: ${(prop) => prop.color};
-	font-weight: ${(prop) => prop.bold};
 `;
 
 export const TitleStyled = styled.div`

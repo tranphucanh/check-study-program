@@ -5,3 +5,4 @@ export { default as Loading } from "./Loading";
 export { default as TableGrid } from "./TableGrid";
 export { default as TableEdit } from "./TableEdit";
 export { default as TextCopy } from "./TextCopy";
+export { FormItem } from "./FormContainer";

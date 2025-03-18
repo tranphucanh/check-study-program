@@ -1,6 +1,5 @@
 // Libraries
 import React from "react";
-import { Navigate, useLocation } from 'react-router-dom'
 
 // Layout
 import Layouts from "@/layouts";
@@ -10,14 +9,9 @@ export type PrivateRouteProps = {
 	isAuthenticated?: boolean;
 };
 
-const PrivateRoutes = ({ children, isAuthenticated }: PrivateRouteProps) => {
-	const location = useLocation()
+const PrivateRoutes = ({ children }: PrivateRouteProps) => {
 
-	return isAuthenticated ? (
-		<Layouts>{children}</Layouts>
-	) : (
-		<Navigate to={'/login'} state={{ from: location }} replace />
-	)
+	return <Layouts>{children}</Layouts>
 };
 
 export default PrivateRoutes;
